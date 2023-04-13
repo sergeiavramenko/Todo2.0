@@ -1,0 +1,16 @@
+.App {
+  text-align: center;
+}
+
+.error {
+  border: red 1px solid;
+}
+.errormessage {
+  color: red;
+}
+.activefilter {
+  background-color: aquamarine;
+}
+.isdone {
+  opacity: 0.5;
+}
