@@ -2,11 +2,11 @@ import React, {useState} from 'react';
 
 export type FilterType = "ALL" | "ACTIVE" | "COMPLETED";
 export type  TasksType = {
-    id: any, title: string, isDone: boolean
+    id: string, title: string, isDone: boolean
 }
 export type PropsType = {
     tasks: Array<TasksType>
-    delTask: (id: any) => void,
+    delTask: (id: string) => void,
     changeFilter: (buttonActiv: FilterType) => void,
     addTask: (inp: string) => void
 }
@@ -16,49 +16,49 @@ function TodoList(props: PropsType) {
     let clickButton = (buttonActiv: FilterType) => {
         props.changeFilter(buttonActiv)
     }
-    let [inp, setInp] = useState('qweq')
-    let add = (inp: string) => {
+    let [inp, setInp] = useState('')
+    let add = () => {
         props.addTask(inp)
         setInp("")
     }
+
     return (
         <div>
             <h3>HI</h3>
             <div>
-                <input type="text" value={inp} onChange={(e) => {
+                <input type="text"
+                       onKeyPress={(e) => {
+                           if (e.charCode == 13) {
+                               props.addTask(inp)
+                               setInp("")
+                           }
+                       }}
+                       value={inp}
+                       onChange={(e) => {
                     setInp(e.currentTarget.value)
                 }}/>
-                <button onClick={() => {
-                    add(inp)
-                }}>+
-                </button>
+                <button onClick={add}>+  </button>
             </div>
             <ul>
                 {
-                    props.tasks.map(e => <li>
+                    props.tasks.map((e) => {
+
+                        let removeHandler = () => {
+                            props.delTask(e.id)
+                        }
+                        return <li key={e.id} >
                         <input type="checkbox" checked={e.isDone}/>
                         <span>{e.title}</span>
-                        <button onClick={() => {
-                            props.delTask(e.id)
-                        }}>--
+                        <button onClick={removeHandler}>--
                         </button>
-                    </li>)
+                    </li>})
                 }
 
             </ul>
             <div>
-                <button onClick={() => {
-                    clickButton("ALL")
-                }}>All
-                </button>
-                <button onClick={() => {
-                    clickButton("ACTIVE")
-                }}>Active
-                </button>
-                <button onClick={() => {
-                    clickButton("COMPLETED")
-                }}>Completed
-                </button>
+                <button onClick={() => {   clickButton("ALL")  }}>All   </button>
+                <button onClick={() => {  clickButton("ACTIVE")   }}>Active     </button>
+                <button onClick={() => {  clickButton("COMPLETED")  }}>Completed     </button>
             </div>
         </div>
     );

@@ -10,7 +10,7 @@ function App() {
         {id: v1(), title: "Html", isDone: true},
         {id: v1(), title: "TS", isDone: false},
     ]);
-    let delTask = (id: number) => {
+    let delTask = (id: string) => {
         let task = tasks.filter(e => e.id !== id)
         setTasks(task)
     }
@@ -26,7 +26,8 @@ function App() {
     }
     let addTask = (inp: string) => {
         let newTask:TasksType = {id: v1(), title: inp, isDone: false }
-        setTasks( [newTask, ...tasks])
+        let newTasks = [newTask, ...tasks]
+        setTasks( newTasks)
 
     }
 
