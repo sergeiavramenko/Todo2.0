@@ -28,12 +28,20 @@ function App() {
         let newTask:TasksType = {id: v1(), title: inp, isDone: false }
         let newTasks = [newTask, ...tasks]
         setTasks( newTasks)
-
+    }
+    let changeStatus = (id: string, isdone: boolean) => {
+        let task = tasks.find(e => e.id == id)
+        if (task) {
+            task.isDone = isdone
+        }
+        setTasks([...tasks])
     }
 
     return (
         <div>
-            <TodoList tasks={tasksForToDoList} delTask={delTask} changeFilter={changeFilter} addTask={addTask}/>
+            <TodoList tasks={tasksForToDoList} delTask={delTask}
+                      changeFilter={changeFilter} addTask={addTask}
+                      changeStatus={changeStatus} filter={filter} />
 
         </div>
     );
